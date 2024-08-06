@@ -1,5 +1,7 @@
 ## Description
-Design Docs: https://www.notion.so/Design-Docs-291a8c5a214e47a9abc5bb837a602abe#93c9ca9f1930424f9b67b26b05447fad
+Design Docs: https://www.notion.so/
+
+Design-Docs-291a8c5a214e47a9abc5bb837a602abe#93c9ca9f1930424f9b67b26b05447fad
 App Design: https://www.figma.com/design/kqrEjpUQV4oRJEZv04j0AE/OrderSystem?node-id=0-1&t=KugGRepGGzl6taRR-0
 
 ## How to Run This App
