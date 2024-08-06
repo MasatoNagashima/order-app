@@ -1,36 +1,41 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## Description
+Design Docs: https://www.notion.so/Design-Docs-291a8c5a214e47a9abc5bb837a602abe#93c9ca9f1930424f9b67b26b05447fad
+App Design: https://www.figma.com/design/kqrEjpUQV4oRJEZv04j0AE/OrderSystem?node-id=0-1&t=KugGRepGGzl6taRR-0
 
-## Getting Started
-
-First, run the development server:
-
+## How to Run This App
+### Install Anyenv
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+$ git clone https://github.com/anyenv/anyenv ~/.anyenv
+$ echo 'export PATH="$HOME/.anyenv/bin:$PATH"' >> ~/.bashrc
+$ ~/.anyenv/bin/anyenv init
+$ anyenv install --init
+$ echo 'eval "$(anyenv init -)"' >> ~/.bash_profile
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Install Repo and Node.js
+```bash
+$ git clone https://github.com/MasatoNagashima/order-app.git
+$ cd order-app
+order-app $ anyenv install nodenv
+order-app $ exec $SHELL -l
+order-app $ nodenv install 19.0.0
+order-app $ nodenv local 19.0.0
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Update Environment Settings
+Update .env.local file as below.
+```bash
+NEXT_PUBLIC_SUPABASE_URL=your-project-url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+### Run This App
+```bash
+order-app $ npm run dev
+```
 
-## Learn More
+## Package Installation
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+```bash
+npm add <package>
+```
