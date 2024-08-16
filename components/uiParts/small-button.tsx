@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import { ReactNode } from 'react';
 
 
 interface SmallButtonProps {
@@ -10,7 +9,7 @@ interface SmallButtonProps {
 }
 
 export const SmallButton = ({ children, href, className, color }: SmallButtonProps) => {
-  const baseClasses = 'py-6 px-8 text-center flex items-center h-16 rounded-full duration-150';
+  const baseClasses = 'py-6 px-8 rounded-full duration-150';
   const colorClasses = color === 'red' 
     ? 'text-white bg-red-500' 
     : 'border border-black';

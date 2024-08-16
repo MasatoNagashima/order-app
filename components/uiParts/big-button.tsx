@@ -11,7 +11,7 @@ export const BigButton = ({ children, href, className }: BigButtonProps) => (
   <Link
     href={href}
     scroll={false}
-    className={`py-5 px-24 text-center flex items-center h-16 rounded-full duration-150 text-white bg-red-500 font-bold ${
+    className={`py-5 px-24 h-16 rounded-full duration-150 text-white bg-red-500 font-bold ${
       className ? className : ''
     }`}
   >

@@ -1,14 +1,29 @@
-import {BigButton} from "@/components/uiParts/BigButton";
+'use client'
+import { Header } from '@/components/layouts/header'
+import { createCustomer, updateCustomer } from '@/lib/customer/actions';
+import { getMenuItems } from '@/lib/menu/actions';
+import { createOrder, getOrders, updateOrder } from '@/lib/order/actions';
+import { getStore, getTableAvailability } from '@/lib/store/actions'
 
-export default function Home() {
-  return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <BigButton
-              href="https://github.com/Nutlope/qrGPT"
-              className="text-gray-700 border hover:bg-gray-50"
-            >
-              ボタン
-            </BigButton>
+export default async function LoginPage() {
+    
+    return (
+    <main className=''>
+      <div className='text-red-500'>
+        <button onClick={() => { createCustomer(1,1,1) }}>Create Customer</button>
+      </div>
+      <div className='text-red-500'>
+        <button onClick={() => { updateCustomer(1,'PAID') }}>Update Customer</button>
+      </div>
+      <div className='text-blue-500'>
+        <button onClick={() => { createOrder(1,1,1) }}>Create Order</button>
+      </div>
+      <div className='text-blue-500'>
+        <button onClick={() => { getOrders(1) }}>Get Orders</button>
+      </div>
+      <div className='text-blue-500'>
+        <button onClick={() => { updateOrder(4, 2, 'COMLETED') }}>Update Order</button>
+      </div>
     </main>
-  );
+    )
 }
