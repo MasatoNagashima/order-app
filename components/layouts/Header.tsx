@@ -5,5 +5,5 @@ interface HeaderProps {
 }
 
 export const Header = ({children}: HeaderProps) => (
-    <div className="text-base py-4 px-8 font-semibold text-center">{children}</div>
+    <div className="text-base py-4 px-8 font-semibold text-center sticky top-0 bg-white">{children}</div>
 )

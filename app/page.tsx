@@ -1,9 +1,7 @@
 'use client'
-import { Header } from '@/components/layouts/header'
+
 import { createCustomer, updateCustomer } from '@/lib/customer/actions';
-import { getMenuItems } from '@/lib/menu/actions';
 import { createOrder, getOrders, updateOrder } from '@/lib/order/actions';
-import { getStore, getTableAvailability } from '@/lib/store/actions'
 
 export default async function LoginPage() {
     

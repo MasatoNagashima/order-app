@@ -33,6 +33,7 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
 
 ### Run This App
 ```bash
+order-app $ npm install
 order-app $ npm run dev
 ```
 
