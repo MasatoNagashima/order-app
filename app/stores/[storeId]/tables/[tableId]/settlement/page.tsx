@@ -1,4 +1,5 @@
 'use client'
+import { Header } from '@/components/layouts/header';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/layouts/tab';
 import { BigButton } from '@/components/uiParts/big-button';
 import { getCustomerStatus } from '@/lib/customer/actions';
