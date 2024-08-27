@@ -1,7 +1,7 @@
 'use client'
 
 import { createCustomer, updateCustomer } from '@/lib/customer/actions';
-import { createOrder, updateOrder } from '@/lib/order/actions';
+import { createOrder } from '@/lib/order/actions';
 
 export default async function LoginPage() {
     
@@ -15,9 +15,6 @@ export default async function LoginPage() {
       </div>
       <div className='text-blue-500'>
         <button onClick={() => { createOrder(1,1,1) }}>Create Order</button>
-      </div>
-      <div className='text-blue-500'>
-        <button onClick={() => { updateOrder(4, 2, 'COMLETED') }}>Update Order</button>
       </div>
     </main>
     )
