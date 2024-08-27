@@ -1,35 +1,48 @@
 'use server'
 
+import { MenuItem } from "../util/constants";
 import { createSupabaseClient } from "../util/server";
 
-type MenuTypes = 
-  | 'KUSHIYAKI'
-  | 'RARE_PARTS'
-  | 'SCROLLED'
-  | 'VEGETABLE'
-  | 'CHICKEN_FOOD'
-  | 'SALAD'
-  | 'CARBS'
-  | 'ALCHOL'
-  | 'SOFT_DRINK'
-
-type MenuItem = {
-  menuItemId: number;
-  menuItemName: string;
-  menuType: MenuTypes;
-}
-
-export async function getMenuItems(): Promise<MenuItem[] | null> {
+export async function getMenuItems(): Promise<MenuItem[]> {
   const supabase = createSupabaseClient();
-  const { data, error } = await supabase
-    .from<MenuItem>('m_menu_items')
-    .select('menu_item_id, menu_item_name, menu_type');
+  const {data, error} = await supabase
+    .from('m_menu_items')
+    .select('menu_item_id, menu_item_name, menu_type, price');
   
   if (error != null){
       throw new Error(error.message);
   }
-  if (data == null){
+  if (data.length === 0){
       throw new Error('Failed to get menu items');   
   }
-  return data
+  return data.map((menuItem) => ({
+    menuItemId: menuItem.menu_item_id,
+    menuItemName: menuItem.menu_item_name,
+    menuType: menuItem.menu_type,
+    price: menuItem.price
+  }));
+}
+
+export async function getMenuItem(
+  menuItemId: string
+): Promise<MenuItem> {
+  const supabase = createSupabaseClient();
+  const {data, error} = await supabase
+    .from('m_menu_items')
+    .select('menu_item_id, menu_item_name, menu_type, price')
+    .eq('menu_item_id', menuItemId)
+    .single();
+  
+  if (error != null){
+      throw new Error(error.message);
+  }
+  if (data.length === 0){
+      throw new Error('Failed to get menu items');   
+  }
+  return {
+    menuItemId: data.menu_item_id,
+    menuItemName: data.menu_item_name,
+    menuType: data.menu_type,
+    price: data.price
+  }
 }

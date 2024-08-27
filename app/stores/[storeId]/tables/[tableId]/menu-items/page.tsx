@@ -1,47 +1,34 @@
 'use client'
+import { Footer } from '@/components/layouts/footer';
 import { Header } from '@/components/layouts/header';
 import MenuItemCard from '@/components/layouts/menu-item-card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/layouts/tab';
-import { getStore, getTableAvailability } from '@/lib/store/actions'
-import { useRouter, useParams } from 'next/navigation'
+import { getCustomerStatus } from '@/lib/customer/actions';
+import { getMenuItems } from '@/lib/menu/actions';
+import { getStore } from '@/lib/store/actions'
+import { MenuItem, menuTypeToName } from '@/lib/util/constants';
+import { useParams, useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react';
 
-
 export default function MenuItemsPage() {
-    // 店名と空席確認
     const {storeId, tableId} = useParams<{ storeId: string; tableId: string }>();
     const [storeName, setStoreName] = useState('');
-    const menuTypes: string[] = [
-        'KUSHIYAKI', 
-        'RARE_PARTS', 
-        'SCROLLED', 
-        'VEGETABLE', 
-        'CHICKEN_FOOD', 
-        'SALAD', 
-        'CARBS', 
-        'ALCHOL', 
-        'SOFT_DRINK'
-    ]
+    const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
+    const router = useRouter();
+    const menuTypes = Object.keys(menuTypeToName)
     const [selectedTab, setSelectedTab] = useState(menuTypes[0]);
-    const menuTypeToName: { [key: string]: string; } = {
-        'KUSHIYAKI': '串焼き',
-        'RARE_PARTS': '希少部位',
-        'SCROLLED': '巻き物',
-        'VEGETABLE': '野菜焼き',
-        'CHICKEN_FOOD': '鶏料理', 
-        'SALAD': 'サラダ', 
-        'CARBS': '飯物', 
-        'ALCHOL': 'アルコール', 
-        'SOFT_DRINK': 'ソフトドリンク'
-    }
+
     
+    // 店名取得
     useEffect(() => {
         const fetchStoreNameAndTableAvailability = async () => {
             const initialStoreName = await getStore(Number(storeId));
             setStoreName(initialStoreName);
-            const isTableAvailable = await getTableAvailability(Number(storeId), Number(tableId));
-            if (isTableAvailable === false) {
-                // router.push(`/stores/${storeId}/tables/${tableId}/menu-items`)
+            const initialMenuItems = await getMenuItems();
+            setMenuItems(initialMenuItems);
+            const {customerId} = await getCustomerStatus(Number(storeId), Number(tableId));
+            if (customerId == null) {
+                router.push(`/stores/${storeId}/tables/${tableId}/login`)
             }
         };
     
@@ -49,30 +36,32 @@ export default function MenuItemsPage() {
     }, [storeId, tableId]);
 
     return (
-    <main className=''>
+    <>
         <Header>{storeName}</Header>
         <Tabs orientation='horizontal' value={selectedTab} onValueChange={setSelectedTab}>
             <TabsList>
                {menuTypes.map((menuType) =>{
-                    return <TabsTrigger value={menuType}>{menuTypeToName[menuType]}</TabsTrigger>
+                    return <TabsTrigger value={menuType} key={menuType}>{menuTypeToName[menuType]}</TabsTrigger>
                 }
                 )}
             </TabsList>
             {menuTypes.map((menuType) => {
-                return <>
-                <TabsContent value={menuType}>
+                return <TabsContent value={menuType} key={menuType}>
                     <div className='flex flex-wrap justify-start max-w-full'>
-                        <MenuItemCard/>
-                        <MenuItemCard/> 
-                        <MenuItemCard/> 
-                        <MenuItemCard/> 
-                        <MenuItemCard/>            
+                    {menuItems.flatMap((menuItem) => (menuItem.menuType === menuType ?
+                            <MenuItemCard 
+                                menuName={menuItem.menuItemName} 
+                                price={menuItem.price} 
+                                link={`/stores/${storeId}/tables/${tableId}/menu-items/${menuItem.menuItemId}`}/>:[]))}
                     </div>
                 </TabsContent>
-                </>
             })
             }
         </Tabs>
-    </main>
+        <Footer 
+            cartLink={`/stores/${storeId}/tables/${tableId}/cart`}
+            paymentLink={`/stores/${storeId}/tables/${tableId}/payment`}
+        />
+    </>
     )
 }

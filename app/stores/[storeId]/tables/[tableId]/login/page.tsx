@@ -1,8 +1,8 @@
 'use client'
 import { Header } from '@/components/layouts/header';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/layouts/tab';
-import { createCustomer } from '@/lib/customer/actions';
-import { getStore, getTableAvailability } from '@/lib/store/actions'
+import { createCustomer, getCustomerStatus } from '@/lib/customer/actions';
+import { getStore } from '@/lib/store/actions'
 import { useRouter, useParams } from 'next/navigation'
 import { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
@@ -22,14 +22,14 @@ export default function LoginPage() {
         const fetchStoreNameAndTableAvailability = async () => {
             const initialStoreName = await getStore(Number(storeId));
             setStoreName(initialStoreName);
-            const isTableAvailable = await getTableAvailability(Number(storeId), Number(tableId));
-            if (isTableAvailable === false) {
-                // router.push(`/stores/${storeId}/tables/${tableId}/menu-items`)
+            const { customerId } = await getCustomerStatus(Number(storeId), Number(tableId));
+            if (customerId != null) {
+                router.push(`/stores/${storeId}/tables/${tableId}/menu-items`)
             }
         };
     
         fetchStoreNameAndTableAvailability();
-    }, [storeId, tableId]);
+    }, []);
 
     // フォーム設定
     const {
