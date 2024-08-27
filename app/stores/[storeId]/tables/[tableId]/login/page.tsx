@@ -61,7 +61,7 @@ export default function LoginPage() {
                         type='text'
                         className='mx-3  h-16 rounded-full duration-150 font-bold text-2xl border-4 text-center'
                         {...register("customerNum", {
-                            required: "人数を入力してください",
+                            required: "",
                           })}
                         />
                         <div className='font-bold text-2xl'>人</div>

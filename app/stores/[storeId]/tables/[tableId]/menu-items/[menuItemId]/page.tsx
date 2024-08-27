@@ -1,6 +1,5 @@
 'use client'
 import CartFooter from '@/components/layouts/cart-footer';
-import { getStore } from '@/lib/store/actions'
 import { useParams, useRouter } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react';
 import Image from "next/image";
@@ -15,13 +14,15 @@ export default function MenuItemPage() {
     const [menuItemName, setMenuItemName] = useState('');
     const [price, setPrice] = useState('');
     let customerIdRef = useRef(0)
-    
+
     // 店名取得
     useEffect(() => {
         const fetchMenuItem = async () => {
-            const {customerId} = await getCustomerStatus(Number(storeId), Number(tableId));
+            const {customerId, paymentStatus} = await getCustomerStatus(Number(storeId), Number(tableId));
             if (customerId == null) {
                 router.push(`/stores/${storeId}/tables/${tableId}/login`)
+            } else if (paymentStatus === 'PROCESSING') {
+                router.push(`/stores/${storeId}/tables/${tableId}/payment`)
             } else {
                 customerIdRef.current = customerId;
             }

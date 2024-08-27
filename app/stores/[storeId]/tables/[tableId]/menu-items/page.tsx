@@ -26,9 +26,11 @@ export default function MenuItemsPage() {
             setStoreName(initialStoreName);
             const initialMenuItems = await getMenuItems();
             setMenuItems(initialMenuItems);
-            const {customerId} = await getCustomerStatus(Number(storeId), Number(tableId));
+            const {customerId, paymentStatus} = await getCustomerStatus(Number(storeId), Number(tableId));
             if (customerId == null) {
                 router.push(`/stores/${storeId}/tables/${tableId}/login`)
+            } else if (paymentStatus === 'PROCESSING') {
+                router.push(`/stores/${storeId}/tables/${tableId}/payment`)
             }
         };
     

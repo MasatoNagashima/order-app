@@ -24,7 +24,10 @@ export default function CartPage() {
             const {customerId, paymentStatus} = await getCustomerStatus(Number(storeId), Number(tableId));
             if (customerId == null) {
                 router.push(`/stores/${storeId}/tables/${tableId}/login`)
-            } else{
+            } else if (paymentStatus === 'PROCESSING') {
+                router.push(`/stores/${storeId}/tables/${tableId}/payment`)
+            }
+            else{
                 const initialOrderItems = await getOrdersInCart(customerId)
                 setOrderItems(initialOrderItems);
             }
@@ -36,7 +39,7 @@ export default function CartPage() {
     const handleCheckOutCart = async() => {
         const orderIds = orderItems.map((orderItem) => orderItem.orderId);
         await updateOrders(orderIds, 'COMPLETED');
-        setOrderItems([]);
+        router.push(`/stores/${storeId}/tables/${tableId}/settlement`)
     }
     
     return (

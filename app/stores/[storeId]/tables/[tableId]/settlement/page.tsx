@@ -18,9 +18,11 @@ export default function SettlementPage() {
         const fetchStoreNameAndTableAvailability = async () => {
             const initialStoreName = await getStore(Number(storeId));
             setStoreName(initialStoreName);
-            const { customerId } = await getCustomerStatus(Number(storeId), Number(tableId));
+            const { customerId, paymentStatus } = await getCustomerStatus(Number(storeId), Number(tableId));
             if (customerId == null) {
                 router.push(`/stores/${storeId}/tables/${tableId}/login`)
+            } else if (paymentStatus === 'PROCESSING') {
+                router.push(`/stores/${storeId}/tables/${tableId}/payment`)
             }
         };
     
