@@ -3,7 +3,6 @@ import { Footer } from '@/components/layouts/footer';
 import { Header } from '@/components/layouts/header';
 import OrderItemCard from '@/components/layouts/order-item-card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/layouts/tab';
-import { BigButton } from '@/components/uiParts/big-button';
 import { getCustomerStatus, updateCustomer } from '@/lib/customer/actions';
 import { getCompletedOrders } from '@/lib/order/actions';
 import { getStore } from '@/lib/store/actions'
@@ -99,7 +98,9 @@ export default function CartPage() {
                     menuItemName={orderItem.menuItemName} 
                     menuItemNumber={orderItem.menuItemNumber} 
                     price={orderItem.price} 
-                    imgPath='/image/Yakitori.png'/>
+                    imgPath='/image/Yakitori.png'
+                    key={orderItem.orderId}
+                    />
                 })}
               </div>
             </TabsContent>
